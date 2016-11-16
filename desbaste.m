@@ -1,4 +1,4 @@
-function [ ] = desbaste( pasadas,n,param,geom )
+function [Results] = desbaste( pasadas,n,param,geom,Results)
 %DESBASTE Lleva a cabo las pasadas y las representa
 %   Se producen los movimientos de avance y penetracion
 %   del portaherramientas. Tambien los movimientos de aproximacion.
@@ -29,10 +29,11 @@ for i=1:intervalos
             line([pasadas(k,1),pasadas(k,2)],[pasadas(k,3),pasadas(k,4)],'Color',[.8 .8 .8])
         end
     end
-    monitorizar=calculos(param,geom,y,1);
+    monitorizar=calculos(param,geom,y,1,abs(xfin-xini)+abs(yfin-yini),2);
     pieza(geom,monitorizar);
     pause(0.00000001)    
 end
+[Results] = datos(monitorizar,Results);
 
 % Si no es la ultima pasada de desbaste la herramienta retrocede hacia
 % el origen en X de las pasadas y a continuacion penetra "d" mm
@@ -56,11 +57,11 @@ if n<length(pasadas(:,1)) % es la ultima pasada?
         for k=1:n
             line([pasadas(k,1),pasadas(k,2)],[pasadas(k,3),pasadas(k,4)],'Color',[.8 .8 .8])
         end
-        monitorizar=calculos(param,geom,yini,1);
+        monitorizar=calculos(param,geom,yini,1,abs(xfin-xini)+abs(yfin-yini),3);
         pieza(geom,monitorizar);
         pause(0.00000001)
     end
-    
+[Results] = datos(monitorizar,Results);
     
     % Penetracion
     
@@ -78,10 +79,11 @@ if n<length(pasadas(:,1)) % es la ultima pasada?
         for k=1:n
             line([pasadas(k,1),pasadas(k,2)],[pasadas(k,3),pasadas(k,4)],'Color',[.8 .8 .8])
         end
-        monitorizar=calculos(param,geom,yini,1);
+        monitorizar=calculos(param,geom,yini,1,abs(xfin-xini)+abs(yfin-yini),4);
         pieza(geom,monitorizar);
         pause(0.00000001)
-    end
+    end  
+[Results] = datos(monitorizar,Results);
     
 end %if: es la ultima pasada?
 

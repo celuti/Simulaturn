@@ -1,9 +1,8 @@
-function [ ] = acabado( pasadas,n,param,geom )
+function [Results] = acabado( pasadas,n,param,geom,Results)
 %ACABADO Pasada final de acabado
 % el portaherramientas retorna al origen pasando por el contorno
 % resultado de las operaciones de desbaste, y lleva a cabo una trayectoria
 % final con la profundidad de pasada de acabado.
-
 tramos = geom.tramos;
 
 % Acabado previo:
@@ -26,12 +25,12 @@ for p=2:length(tramos(:,1))
         for k=1:n
             line([pasadas(k,1),pasadas(k,2)],[pasadas(k,3),pasadas(k,4)],'Color',[.8 .8 .8])
         end
-        monitorizar=calculos(param,geom,y,2);
+        monitorizar=calculos(param,geom,y,2,abs(xfin-xini)+abs(yfin-yini),1);
         pieza(geom,monitorizar);
         pause(0.00000001)
     end
 end %for tramos
-
+[Results] = datos(monitorizar,Results);
 % Vuelta al origen
 
 xini=x;
@@ -50,11 +49,12 @@ for i=1:intervalos
     for k=1:n
         line([pasadas(k,1),pasadas(k,2)],[pasadas(k,3),pasadas(k,4)],'Color',[.8 .8 .8])
     end
-    monitorizar=calculos(param,geom,y,2);
+    monitorizar=calculos(param,geom,y,2,abs(xfin-xini)+abs(yfin-yini),3);
     pieza(geom,monitorizar);
     pause(0.00000001)
 end
 
+[Results] = datos(monitorizar,Results);
 % Ahora SI comienza el ACABADO
 
 % Penetracion acabado
@@ -73,11 +73,11 @@ for i=1:intervalos
     for k=1:n
         line([pasadas(k,1),pasadas(k,2)],[pasadas(k,3),pasadas(k,4)],'Color',[.8 .8 .8])
     end
-    monitorizar=calculos(param,geom,y,2);
+    monitorizar=calculos(param,geom,y,2,abs(xfin-xini)+abs(yfin-yini),4);
     pieza(geom,monitorizar);
     pause(0.00000001)
 end
-
+[Results] = datos(monitorizar,Results);
 % ACABADO
 
 for p=1:length(tramos(:,1))
@@ -102,11 +102,11 @@ for p=1:length(tramos(:,1))
                 line([tramos(l,1),tramos(l,2)],[tramos(l,3),tramos(l,4)],'Color','m')
             end
         end
-        monitorizar=calculos(param,geom,y,2);
+        monitorizar=calculos(param,geom,y,2,abs(xfin-xini)+abs(yfin-yini),1);
         pieza(geom,monitorizar);
         pause(0.00000001)
     end
-    
+[Results] = datos(monitorizar,Results);  
 end % mecaniza
 
 

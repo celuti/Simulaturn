@@ -1,4 +1,4 @@
-function []=simulaturn( geom,param )
+function [Results]=simulaturn(geom,param,Results)
 % SIMULATURN funcion principal que calcula las pasadas y llama a las funciones
 % de desbaste y acabado
 tramos = geom.tramos;
@@ -16,8 +16,11 @@ for i=1:npasadas_desbaste
     pasadas(i,:)=[xini,xfin,yini,yini];
     
     % Pasadas de desbaste
-    desbaste(pasadas,i,param,geom) 
+
+    Results=desbaste(pasadas,i,param,geom,Results);
+    
 end
 % Pasadas finales de acabado
-acabado(pasadas,i,param,geom) 
+
+Results=acabado(pasadas,i,param,geom,Results); 
 end
